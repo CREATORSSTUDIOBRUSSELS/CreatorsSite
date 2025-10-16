@@ -1180,73 +1180,46 @@
     <!-- CONTACT -->
     <section id="contact" class="contact">
         <h2 data-en="Contact Us" data-fr="Contactez-Nous">Contact Us</h2>
-<!-- Multilingual Formspree contact form -->
+      <!-- Working Formspree contact form with all required fields -->
 <form
   id="contact-form"
   action="https://formspree.io/f/xyznoeyo"
   method="POST"
 >
-  <label data-en="Your Name" data-fr="Votre Nom">
-    <span class="label-text">Your Name</span>
-    <input type="text" name="name" required
-           placeholder="Your Name"
-           data-en="Your Name"
-           data-fr="Votre Nom">
+  <label>
+    Your Name:
+    <input type="text" name="name" required>
   </label>
 
-  <label data-en="Your Email" data-fr="Votre Email">
-    <span class="label-text">Your Email</span>
-    <input type="email" name="email" required
-           placeholder="Your Email"
-           data-en="Your Email"
-           data-fr="Votre Email">
+  <label>
+    Your Email:
+    <input type="email" name="email" required>
   </label>
 
-  <label data-en="Subject" data-fr="Sujet">
-    <span class="label-text">Subject</span>
-    <input type="text" name="subject" required
-           placeholder="Subject"
-           data-en="Subject"
-           data-fr="Sujet">
+  <label>
+    Subject:
+    <input type="text" name="subject" required>
   </label>
 
-  <label data-en="Your Message" data-fr="Votre Message">
-    <span class="label-text">Your Message</span>
-    <textarea name="message" required
-              placeholder="Your Message"
-              data-en="Your Message"
-              data-fr="Votre Message"></textarea>
+  <label>
+    Your Message:
+    <textarea name="message" required></textarea>
   </label>
 
-  <button type="submit" data-en="Send Message" data-fr="Envoyer le Message">
-    Send Message
-  </button>
+  <button type="submit">Send</button>
 </form>
 
 <script>
-const lang = 'fr'; // Change this to 'en' or 'fr'
-
-const form = document.getElementById('contact-form');
-
-// Set labels, placeholders, and button text based on selected language
-form.querySelectorAll('[data-en]').forEach(el => {
-  const text = el.dataset[lang];
-  if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-    el.placeholder = text;
-  } else if (el.tagName === 'LABEL' || el.tagName === 'BUTTON' || el.classList.contains('label-text')) {
-    el.textContent = text;
-  }
-});
-
-form.addEventListener('submit', async function(e) {
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
+
   const formData = new FormData(this);
 
-  // Check required fields
+  // Optional: check required fields before sending
   const requiredFields = this.querySelectorAll('[required]');
   for (let field of requiredFields) {
     if (!field.value.trim()) {
-      alert(`❌ ${field.placeholder} ${lang === 'fr' ? 'est requis.' : 'is required.'}`);
+      alert(`❌ Please fill the "${field.name}" field.`);
       field.focus();
       return;
     }
@@ -1260,18 +1233,17 @@ form.addEventListener('submit', async function(e) {
     });
 
     if (response.ok) {
-      alert(lang === 'fr' ? '✅ Message envoyé avec succès !' : '✅ Message sent successfully!');
+      alert('✅ Message sent successfully!');
       this.reset();
     } else {
-      alert(lang === 'fr' ? '❌ Erreur lors de l’envoi. Vérifiez votre configuration Formspree.' : '❌ Error sending message. Check your Formspree setup.');
+      alert('❌ Error sending message. Check your Formspree setup.');
     }
   } catch (error) {
-    alert(lang === 'fr' ? '❌ Erreur réseau. Veuillez réessayer.' : '❌ Network error. Please try again.');
+    alert('❌ Network error. Please try again.');
     console.error(error);
   }
 });
 </script>
-
 
     </section>
 
@@ -1503,7 +1475,7 @@ form.addEventListener('submit', async function(e) {
             darkModeIcon.classList.add('fa-sun');
         }
 
-    
+        
 
         // Newsletter form submission
         document.querySelector('.newsletter').addEventListener('submit', function(e) {
