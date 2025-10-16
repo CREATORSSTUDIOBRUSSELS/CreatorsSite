@@ -1180,31 +1180,71 @@
     <!-- CONTACT -->
     <section id="contact" class="contact">
         <h2 data-en="Contact Us" data-fr="Contactez-Nous">Contact Us</h2>
-      <form id="contact-form" action="https://formspree.io/f/xyznoeyo" method="POST">
-    <input type="text" name="name" 
-           placeholder="Your Name" 
-           required 
-           data-en="Your Name" 
-           data-fr="Votre Nom">
-    
-    <input type="email" name="email" 
-           placeholder="Your Email" 
-           required 
-           data-en="Your Email" 
-           data-fr="Votre Email">
-    
-    <textarea name="message" 
-              placeholder="Your Message" 
-              required 
-              data-en="Your Message" 
-              data-fr="Votre Message"></textarea>
-    
-    <button type="submit" 
-            data-en="Send Message" 
-            data-fr="Envoyer le Message">
-        Send Message
-    </button>
+      <!-- Working Formspree contact form with all required fields -->
+<form
+  id="contact-form"
+  action="https://formspree.io/f/xyznoeyo"
+  method="POST"
+>
+  <label>
+    Your Name:
+    <input type="text" name="name" required>
+  </label>
+
+  <label>
+    Your Email:
+    <input type="email" name="email" required>
+  </label>
+
+  <label>
+    Subject:
+    <input type="text" name="subject" required>
+  </label>
+
+  <label>
+    Your Message:
+    <textarea name="message" required></textarea>
+  </label>
+
+  <button type="submit">Send</button>
 </form>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  // Optional: check required fields before sending
+  const requiredFields = this.querySelectorAll('[required]');
+  for (let field of requiredFields) {
+    if (!field.value.trim()) {
+      alert(`❌ Please fill the "${field.name}" field.`);
+      field.focus();
+      return;
+    }
+  }
+
+  try {
+    const response = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      alert('✅ Message sent successfully!');
+      this.reset();
+    } else {
+      alert('❌ Error sending message. Check your Formspree setup.');
+    }
+  } catch (error) {
+    alert('❌ Network error. Please try again.');
+    console.error(error);
+  }
+});
+</script>
+
     </section>
 
     <!-- FOOTER -->
@@ -1251,27 +1291,6 @@
             <p>&copy; 2025 CREATORS STUDIO. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-document.getElementById('contact-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const formData = new FormData(this);
-  const response = await fetch(this.action, {
-    method: 'POST',
-    body: formData,
-    headers: { 'Accept': 'application/json' }
-  });
-
-  if (response.ok) {
-    alert('✅ Message sent successfully!');
-    this.reset();
-  } else {
-    alert('❌ Error sending message. Check your Formspree setup.');
-  }
-});
-</script>
-
 
     <script>
         // Scroll event for navbar and logo
