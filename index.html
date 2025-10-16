@@ -1,0 +1,1472 @@
+<!DOCTYPE hlifetml>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creators Studio Brussels</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #111;
+            --card-bg: #f7f7f7;
+            --nav-bg: rgba(255,255,255,0.9);
+            --nav-text: #111;
+            --footer-bg: #f7f7f7;
+            --footer-text: #111;
+            --accent-color: #f0c000;
+            --header-text: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111;
+            --text-color: #fff;
+            --card-bg: #333;
+            --nav-bg: rgba(0,0,0,0.9);
+            --nav-text: #fff;
+            --footer-bg: #333;
+            --footer-text: #fff;
+            --accent-color: #f0c000;
+            --header-text: #fff;
+        }
+
+        * {margin:0; padding:0; box-sizing:border-box;}
+        body {
+            font-family: 'VT323', monospace; 
+            background: var(--bg-color); 
+            color: var(--text-color); 
+            line-height:1.6; 
+            scroll-behavior:smooth;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        a {text-decoration:none; color:inherit;}
+        
+        /* ===== MOBILE MENU STARS ===== */
+        .cosmic-menu .menu-star {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            animation: menuTwinkle 3s infinite ease-in-out;
+            width: calc(0.55px + (1.65px * var(--size-rand, 0.5)));
+            height: calc(0.55px + (1.65px * var(--size-rand, 0.5)));
+            z-index: 1;
+        }
+        
+        @keyframes menuTwinkle {
+            0%, 100% { 
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+        
+        nav.scrolled {
+            top: 1rem;
+            left: 1rem;
+        }
+        
+        nav.black {
+        
+        }
+        
+        nav .logo, 
+        nav .menu li a { 
+            color: var(--header-text); 
+            transition: all 0.5s ease;
+        }
+        
+        nav.black .logo, 
+        nav.black .menu li a { 
+            color: var(--nav-text); 
+        }
+        
+        /* Logo size transitions */
+        nav .logo {
+            font-family: 'Proxima Nova', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            color: var(--header-text);
+            transform-origin: top left;
+            transition: all 0.5s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        nav.scrolled .logo {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Menu transitions */
+        nav .menu {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 1rem;
+            transition: all 0.5s ease;
+        }
+        
+        nav.scrolled .menu {
+            gap: 0.75rem;
+        }
+        
+        nav .menu li a {
+            color: var(--header-text);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.5s ease;
+            font-size: 1.2rem;
+        }
+        
+        nav.scrolled .menu li a {
+            font-size: 1rem;
+        }
+        
+        nav .menu li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav.footer-menu {
+            position: relative;
+            top: auto;
+            left: auto;
+            width: 100%;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            padding: 1rem 0;
+            transform: none;
+            margin-bottom: 2rem;
+            transition: all 0.5s ease;
+        }
+        
+        nav.footer-menu .logo {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 0;
+            margin-right: 2rem;
+        }
+        
+        nav.footer-menu .menu {
+            flex-direction: row;
+            gap: 2rem;
+            transition: all 0.5s ease;
+        }
+        
+        nav.footer-menu .menu li a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Typewriter animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--accent-color);
+            white-space: nowrap;
+            animation: typing 1.5s steps(15, end), blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-color); }
+        }
+        
+        /* Mixed letters animation for footer menu */
+        @keyframes mix-letters {
+            0% { 
+                opacity: 0;
+                transform: translateY(20px) rotate(10deg);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-10px) rotate(-5deg);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+        
+        .footer-menu .menu li {
+            animation: mix-letters 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .footer-menu .menu li:nth-child(1) { animation-delay: 0.1s; }
+        .footer-menu .menu li:nth-child(2) { animation-delay: 0.2s; }
+        .footer-menu .menu li:nth-child(3) { animation-delay: 0.3s; }
+        .footer-menu .menu li:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1002;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: white;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Cosmic Mobile Menu */
+        .cosmic-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow: hidden;
+        }
+        
+        .cosmic-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cosmic-menu ul {
+            list-style: none;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cosmic-menu ul li {
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .cosmic-menu.active ul li {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .cosmic-menu ul li:nth-child(1) { transition-delay: 0.1s; }
+        .cosmic-menu ul li:nth-child(2) { transition-delay: 0.2s; }
+        .cosmic-menu ul li:nth-child(3) { transition-delay: 0.3s; }
+        .cosmic-menu ul li:nth-child(4) { transition-delay: 0.4s; }
+        
+        .cosmic-menu ul li a {
+            color: #fff;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+        
+        .cosmic-menu ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .cosmic-menu ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .cosmic-menu ul li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* Language Switch */
+        .language-switch {
+            position: fixed;
+            top: 2rem;
+            right: 6rem;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .language-switch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .language-switch button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .language-switch button.active {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .language-switch button:hover:not(.active) {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        header iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100vh;
+            min-width: 177.78vh;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        /* Gradient overlay for better readability */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--header-text);
+            padding: 0 1rem;
+        }
+        
+        .header-content h1 {
+            font-family: 'Proxima Nova', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.35);
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 1.5s steps(15, end) forwards, blink-caret .75s step-end infinite;
+            border-right: .15em solid var(--accent-color);
+        }
+        
+        .header-content p {
+            font-family: 'VT323', monospace;
+            font-size: 1.8rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h2 {
+            font-family: 'Proxima Nova', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        /* ABOUT */
+        .about p {
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        /* EQUIPMENT SECTION */
+        .equipment-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            justify-content: center;
+}
+        
+        /* Center the last equipment card on desktop */
+        @media (min-width: 769px) {
+            .equipment-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .equipment-card {
+                margin: 0;
+                min-height: 420px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            
+            .toggle-details {
+                margin: 1rem auto 0;
+                display: block;
+                width: fit-content;
+            }
+        }
+        
+        .equipment-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 350px;
+            /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            background: rgba(247, 247, 247, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .equipment-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .equipment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .equipment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .equipment-icon {
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .equipment-icon img {
+            max-width: 60px;
+            max-height: 60px;
+            transition: all 0.3s ease;
+        }
+        
+        .equipment-card:hover .equipment-icon img {
+            transform: scale(1.1);
+            filter: brightness(0) saturate(100%) invert(70%) sepia(90%) saturate(500%) hue-rotate(5deg);
+        }
+        
+        .equipment-card h3 {
+            font-family: 'Proxima Nova', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            position: relative;
+            z-index: 2;
+        }
+        
+      .equipment-card > p {
+            display: none;
+        }
+        
+        .equipment-card.active .detail-box p {
+            display: block;
+        }
+        /* Updated detail box for smooth expand/collapse */
+        .detail-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        
+        .equipment-card.active .detail-box {
+            max-height: 500px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 1rem;
+        }
+        
+        /* Ensure proper spacing when detail box is open */
+        .equipment-card.active {
+            min-height: 450px;
+        }
+        
+        @media (max-width: 768px) {
+            .equipment-card.active {
+                min-height: 400px;
+            }
+        }
+        
+        .toggle-details {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            align-self: flex-start;
+            margin-top: auto;
+        }
+        
+        .toggle-details:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Center toggle button on mobile */
+        @media (max-width: 768px) {
+            .toggle-details {
+                align-self: center;
+                margin: 1rem auto 0 auto;
+            }
+        }
+
+        /* CONTACT */
+        .contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        
+        .contact input, .contact textarea {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            font-family: 'VT323', monospace;
+            transition: all 0.3s ease;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .contact input:focus, .contact textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(240, 192, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .contact button {
+            padding: 1rem;
+            border: none;
+            background: var(--text-color);
+            color: var(--bg-color);
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'VT323', monospace;
+        }
+        
+        .contact button:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            color: var(--footer-text);
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+        
+        .footer-top {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+        
+        .footer-col h3, .footer-col h4 {
+            font-family: 'Proxima Nova', sans-serif;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .footer-col p, .footer-col ul, .footer-col form {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--text-color);
+            transition: 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .newsletter {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .newsletter input {
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            flex: 1;
+            transition: all 0.3s ease;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .newsletter input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(240, 192, 0, 0.2);
+        }
+        
+        .newsletter button {
+            padding: 0.7rem 1rem;
+            border: none;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .newsletter button:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-bottom .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-bottom .social-links a {
+            font-size: 1.4rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-bottom .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .header-content h1 {
+                font-size: 3rem;
+            }
+            
+            .header-content p {
+                font-size: 1.5rem;
+            }
+            
+            nav.footer-menu {
+                flex-direction: column;
+            }
+            
+            nav.footer-menu .logo {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Hide desktop menu on mobile */
+            nav {
+                display: none;
+            }
+            
+            /* Show mobile menu button */
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            /* Adjust language switch position */
+            .language-switch {
+                top: 1.5rem;
+                right: 5rem;
+            }
+
+            /* Adjust dark mode toggle position */
+            .dark-mode-toggle {
+                top: 1.5rem;
+                left: auto;
+                right: 1.5rem;
+            }
+            
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header-content p {
+                font-size: 1.3rem;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-card {
+                min-height: 300px;
+            }
+            
+            nav.footer-menu {
+                display: none;
+            }
+            
+            .scroll-to-top {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            /* Ensure cosmic menu is hidden on desktop */
+            .cosmic-menu {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+            
+            /* Hide header h1 on desktop */
+            .header-content h1 {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter {
+                flex-direction: column;
+            }
+            
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content p {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .language-switch {
+                top: 1rem;
+                right: 4.5rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .dark-mode-toggle {
+                top: 1rem;
+                left: auto;
+                right: 1rem;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .mobile-menu-btn {
+                top: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .cosmic-menu ul li a {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Original Desktop Menu -->
+    <nav id="navbar">
+        <div class="logo" id="menu-logo">CREATORS STUDIO</div>
+        <ul class="menu">
+            <li><a href="#home" data-en="Home" data-fr="Accueil">Home</a></li>
+            <li><a href="#about" data-en="About" data-fr="À Propos">About</a></li>
+            <li><a href="#services" data-en="Services & Equipment" data-fr="Services & Équipement">Services & Equipment</a></li>
+            <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Cosmic Mobile Menu -->
+    <div class="cosmic-menu" id="cosmicMenu">
+        <!-- Stars will be added here by JavaScript -->
+        <ul>
+            <li><a href="#home" data-en="Home" data-fr="Accueil">Home</a></li>
+            <li><a href="#about" data-en="About" data-fr="À Propos">About</a></li>
+            <li><a href="#services" data-en="Services & Equipment" data-fr="Services & Équipement">Services & Equipment</a></li>
+            <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Language Switch -->
+    <div class="language-switch">
+        <button id="lang-en" class="active">EN</button>
+        <button id="lang-fr">FR</button>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- HEADER -->
+    <header id="home">
+        <iframe src="https://www.youtube.com/embed/cF2pd9PV9jI?autoplay=1&loop=1&playlist=cF2pd9PV9jI&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div class="header-content">
+            <h1>CREATORS STUDIO</h1>
+            <p data-en="CREATIVE PLAYGROUND" data-fr="TERRAIN DE JEU CRÉATIF">CREATIVE PLAYGROUND</p>
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <h2 data-en="About Us" data-fr="À Propos">About Us</h2>
+        <p data-en="CREATORS STUDIO is a unique creative and collaborative space in Brussels, designed for artists, entrepreneurs, and multimedia enthusiasts. Our studio combines creativity, visual innovation and technology to bring your projects to life. We provide a complete working environment with professional equipment: equipped photo and video studios, lighting, various backdrops, editing stations and graphic design tools. More than just a studio, it's a true multimedia playground where imagination becomes reality." data-fr="CREATORS STUDIO est un espace créatif et collaboratif unique à Bruxelles, conçu pour les artistes, entrepreneurs et passionnés de multimédia. Notre studio allie créativité, innovation visuelle et technologie pour donner vie à vos projets. Nous proposons un environnement de travail complet avec du matériel professionnel : studios photo et vidéo équipés, éclairages, différents fonds, postes de montage et outils de design graphique. Plus qu'un simple studio, c'est un véritable terrain de jeu multimédia où l'imagination devient réalité.">CREATORS STUDIO is a unique creative and collaborative space in Brussels, designed for artists, entrepreneurs, and multimedia enthusiasts. Our studio combines creativity, visual innovation and technology to bring your projects to life. We provide a complete working environment with professional equipment: equipped photo and video studios, lighting, various backdrops, editing stations and graphic design tools. More than just a studio, it's a true multimedia playground where imagination becomes reality.</p>
+    </section>
+ <!-- SERVICES & EQUIPMENT -->
+    <section id="services" class="gallery">
+        <h2 data-en="Services & Equipment" data-fr="Services & Équipement">Services & Equipment</h2>
+        <p class="equipment-intro" data-en="Discover our professional equipment and services for your creative projects:" data-fr="Découvrez notre équipement professionnel et nos services pour vos projets créatifs :">Discover our professional equipment and services for your creative projects:</p>
+
+        <div class="equipment-grid">
+            <!-- STUDIO PHOTO -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.ibb.co/1J74TXsm/photo.png" alt="Studio Photo">
+                </div>
+                <h3 data-en="STUDIO PHOTO" data-fr="STUDIO PHOTO">Studio Photo</h3> 
+                <div class="detail-box">
+                    <p data-en="Our studios offer a wide variety of colored backdrops to suit all visual styles: neutral backgrounds, bright colors, textures and original sets. The space is equipped with professional equipment: 5 flashes and 4 continuous lights with stands and different softboxes as well as decorative material to bring your ideas to life and enhance your productions." data-fr="Nos studios proposent une grande variété de fonds colorés pour s'adapter à tous les styles visuels : fonds neutres, couleurs vives, textures et décors originaux. L'espace est équipé de matériel professionnel : 5 flashes et 4 lumières continues avec pieds et différents softbox ainsi que du matériel de décoration pour donner vie à vos idées et sublimer vos productions.">Our studios offer a wide variety of colored backdrops to suit all visual styles: neutral backgrounds, bright colors, textures and original sets. The space is equipped with professional equipment: 5 flashes and 4 continuous lights with stands and different softboxes as well as decorative material to bring your ideas to life and enhance your productions.</p>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+
+            <!-- POST-PRODUCTION -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.ibb.co/pDcpDb3/post-productio.png" alt="Post-Production">
+                </div>
+                <h3 data-en="Post-Production" data-fr="Post-Production">Post-Production</h3>
+                <div class="detail-box">
+                    <p data-en="Our team takes over after capture to enhance each project. We offer:" data-fr="Notre équipe prend le relais après la capture pour sublimer chaque projet. Nous proposons :">Our team takes over after capture to enhance each project. We offer:</p>
+                    <ul>
+                        <li data-en="Photo editing: retouching, color grading, visual harmonization" data-fr="Retouche photo : retouche, étalonnage des couleurs, harmonisation visuelle">Photo editing: retouching, color grading, visual harmonization</li>
+                        <li data-en="Video editing: pre-production, filming, editing, color grading" data-fr="Montage vidéo : pré-production, tournage, montage, étalonnage">Video editing: pre-production, filming, editing, color grading</li>
+                        <li data-en="Designing: graphic creation and visual direction" data-fr="Design : création graphique et direction visuelle">Designing: graphic creation and visual direction</li>
+                        
+                    </ul>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+
+            <!-- ART DIRECTION -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.postimg.cc/YqKckTM1/art-direct.png" alt="Art Direction">
+                </div>
+                <h3 data-en="Art Direction" data-fr="Direction Artistique">Art Direction</h3>
+                <div class="detail-box">
+                    <p data-en="Our expertise in art direction accompanies you in defining, harmonizing and expressing the visual aspect of your universe. Custom creative support to refine your image, strengthen your identity and give aesthetic coherence to each of your projects." data-fr="Notre expertise en direction artistique vous accompagne dans la définition, l'harmonisation et l'expression visuelle de votre univers. Un accompagnement créatif sur mesure pour affiner votre image, renforcer votre identité et donner une cohérence esthétique à chacun de vos projets.">Our expertise in art direction accompanies you in defining, harmonizing and expressing the visual aspect of your universe. Custom creative support to refine your image, strengthen your identity and give aesthetic coherence to each of your projects.</p>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+
+            <!-- COWORKING SPACE -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.ibb.co/FLSsMXtW/Coworking-Space.png" alt="Coworking Space">
+                </div>
+                <h3 data-en="Coworking Space" data-fr="Espace Coworking">Coworking Space</h3>
+                <div class="detail-box">
+                    <p data-en="Our workspaces, desks and private offices are available for rent with flexible packages, including or excluding access to the photo studio. An ideal environment for creative professionals looking for a stimulating and collaborative workspace." data-fr="Nos espaces de travail, bureaux et bureaux privés sont disponibles à la location avec des forfaits flexibles, incluant ou non l'accès au studio photo. Un environnement idéal pour les professionnels créatifs à la recherche d'un espace de travail stimulant et collaboratif.">Our workspaces, desks and private offices are available for rent with flexible packages, including or excluding access to the photo studio. An ideal environment for creative professionals looking for a stimulating and collaborative workspace.</p>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+
+            <!-- MAKE UP AREA -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.ibb.co/q3htdfqq/Makeup-Styling-Area.png" alt="Make Up Area">
+                </div>
+                <h3 data-en="Make Up Area" data-fr="Espace Maquillage">Make Up Area</h3>
+                <div class="detail-box">
+                    <p data-en="A dedicated space with a large mirror and optimal lighting for makeup preparation before your shoots. This area is designed to ensure comfort and efficiency during your preparation, with easy access to the studio." data-fr="Un espace dédié avec un grand miroir et un éclairage optimal pour la préparation maquillage avant vos shootings. Cet espace est conçu pour assurer confort et efficacité lors de votre préparation, avec un accès facile au studio.">A dedicated space with a large mirror and optimal lighting for makeup preparation before your shoots. This area is designed to ensure comfort and efficiency during your preparation, with easy access to the studio.</p>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+
+            <!-- ESPACE POLYVALENT -->
+            <div class="equipment-card">
+                <div class="equipment-icon">
+                    <img src="https://i.ibb.co/84f0BfW0/Polyvalent-Space.png" alt="Espace Polyvalent">
+                </div>
+                <h3 data-en="VERSATILE SPACE" data-fr="ESPACE POLYVALENT">Versatil Space</h3>
+                <div class="detail-box">
+                    <p data-en="Our versatile space is designed to adapt to your needs: photo shoots, video recordings, workshops, meetings and creative events. With modular equipment and a flexible layout, this space can be transformed to host a wide variety of projects and activities." data-fr="Notre espace polyvalent est conçu pour s'adapter à vos besoins : shootings photo, enregistrements vidéo, ateliers, réunions et événements créatifs. Avec un équipement modulaire et un agencement flexible, cet espace peut se transformer pour accueillir une grande variété de projets et d'activités.">Our versatile space is designed to adapt to your needs: photo shoots, video recordings, workshops, meetings and creative events. With modular equipment and a flexible layout, this space can be transformed to host a wide variety of projects and activities.</p>
+                </div>
+                <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <h2 data-en="Contact Us" data-fr="Contactez-Nous">Contact Us</h2>
+        <form id="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required data-en="Your Name" data-fr="Votre Nom">
+            <input type="email" name="email" placeholder="Your Email" required data-en="Your Email" data-fr="Votre Email">
+            <textarea name="message" rows="5" placeholder="Your Message" required data-en="Your Message" data-fr="Votre Message"></textarea>
+            <button type="submit" data-en="Send Message" data-fr="Envoyer le Message">Send Message</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3 data-en="About Us" data-fr="À Propos">About Us</h3>
+                <p data-en="CREATORS STUDIO is a unique creative and collaborative space in Brussels, designed for artists, entrepreneurs, and multimedia enthusiasts." data-fr="CREATORS STUDIO est un espace créatif et collaboratif unique à Bruxelles, conçu pour les artistes, entrepreneurs et passionnés de multimédia.">CREATORS STUDIO is a unique creative and collaborative space in Brussels, designed for artists, entrepreneurs, and multimedia enthusiasts.</p>
+            </div>
+            <div class="footer-col">
+              
+                <ul>
+                   
+                </ul>
+            </div>
+      <div class="footer-col">
+    <h4 data-en="Contact" data-fr="Contact">Contact</h4>
+    <p data-en="Rue Zeyp 17, 1083 Ganshoren, Brussels" 
+       data-fr="Rue Zeyp 17, 1083 Ganshoren, Bruxelles">
+        Rue Zeyp 17, 1083 Ganshoren, Brussels
+    </p>
+    <p data-en="Phone: +32 472 19 12 75" 
+       data-fr="Téléphone: +32 472 19 12 75">
+        <a href="tel:+32472191275">+32 472 19 12 75</a>
+    </p>
+    <p data-en="Email: contact@creatorsstudio.be" 
+       data-fr="Email: contact@creatorsstudio.be">
+        <a href="mailto:contact@creatorsstudio.be">contact@creatorsstudio.be</a>
+    </p>
+    <form class="newsletter">
+        <!-- Newsletter form elements if needed -->
+    </form>
+</div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="social-links">
+                <a href="https://instagram.com/creators.be" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/p/Creators-Studio-61559703722108/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+               
+            </div>
+            <p>&copy; 2024 CREATORS STUDIO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll event for navbar and logo
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const scrollToTop = document.getElementById('scrollToTop');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                navbar.classList.add('black');
+            } else {
+                navbar.classList.remove('scrolled');
+                navbar.classList.remove('black');
+            }
+            
+            // Show/hide scroll to top button
+            if (window.scrollY > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top functionality
+        document.getElementById('scrollToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const cosmicMenu = document.getElementById('cosmicMenu');
+        const cosmicMenuLinks = cosmicMenu.querySelectorAll('a');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            cosmicMenu.classList.toggle('active');
+            
+            if (cosmicMenu.classList.contains('active')) {
+                createStars();
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        cosmicMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                cosmicMenu.classList.remove('active');
+            });
+        });
+
+        // Create stars for cosmic menu
+        function createStars() {
+            const cosmicMenu = document.getElementById('cosmicMenu');
+            const existingStars = cosmicMenu.querySelectorAll('.menu-star');
+            existingStars.forEach(star => star.remove());
+            
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('menu-star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const sizeRand = Math.random();
+                
+                // Random animation delay
+                const delay = Math.random() * 3;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--size-rand', sizeRand);
+                star.style.animationDelay = `${delay}s`;
+                
+                cosmicMenu.appendChild(star);
+            }
+        }
+
+        // Equipment card toggle functionality
+        document.querySelectorAll('.toggle-details').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.equipment-card');
+                const isActive = card.classList.contains('active');
+                
+                // Close all other cards
+                document.querySelectorAll('.equipment-card').forEach(otherCard => {
+                    if (otherCard !== card) {
+                        otherCard.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current card
+                card.classList.toggle('active');
+                
+                // Update button text
+                if (card.classList.contains('active')) {
+                    this.textContent = this.getAttribute('data-en') === 'More Info' ? 'Less Info' : 'Moins d\'Infos';
+                } else {
+                    this.textContent = this.getAttribute('data-en') === 'More Info' ? 'More Info' : 'Plus d\'Infos';
+                }
+            });
+        });
+
+        // Language switching functionality
+        let currentLang = 'en';
+        const langEnBtn = document.getElementById('lang-en');
+        const langFrBtn = document.getElementById('lang-fr');
+
+        langEnBtn.addEventListener('click', function() {
+            if (currentLang !== 'en') {
+                switchLanguage('en');
+                langEnBtn.classList.add('active');
+                langFrBtn.classList.remove('active');
+            }
+        });
+
+        langFrBtn.addEventListener('click', function() {
+            if (currentLang !== 'fr') {
+                switchLanguage('fr');
+                langFrBtn.classList.add('active');
+                langEnBtn.classList.remove('active');
+            }
+        });
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (lang === 'en') {
+                    element.textContent = element.getAttribute('data-en');
+                } else {
+                    element.textContent = element.getAttribute('data-fr');
+                }
+            });
+            
+            // Update input placeholders
+            document.querySelectorAll('input[data-en], textarea[data-en]').forEach(element => {
+                if (lang === 'en') {
+                    element.placeholder = element.getAttribute('data-en');
+                } else {
+                    element.placeholder = element.getAttribute('data-fr');
+                }
+            });
+            
+            // Update button texts
+            document.querySelectorAll('button[data-en]').forEach(button => {
+                if (lang === 'en') {
+                    button.textContent = button.getAttribute('data-en');
+                } else {
+                    button.textContent = button.getAttribute('data-fr');
+                }
+            });
+        }
+
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = darkModeToggle.querySelector('i');
+
+        darkModeToggle.addEventListener('click', function() {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        }
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(currentLang === 'en' ? 'Thank you for your message! We will get back to you soon.' : 'Merci pour votre message ! Nous vous répondrons bientôt.');
+            this.reset();
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(currentLang === 'en' ? 'Thank you for subscribing!' : 'Merci de vous être abonné !');
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Fade in sections on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
