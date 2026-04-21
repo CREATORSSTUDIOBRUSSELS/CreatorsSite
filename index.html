@@ -502,6 +502,8 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            /* align controls to the right side of the banner */
+            justify-content: flex-end;
             padding: 0 3rem 2.5rem 3rem;
         }
 
@@ -1075,10 +1077,10 @@
 
     <!-- ===== HEADER with YouTube Video Banner ===== -->
     <header id="home">
-        <!-- HTML5 background video (autoplay, muted, loop) -->
+        <!-- Streamable MP4 background video (autoplay muted to allow autoplay; user can unmute) -->
         <video id="bgVideo" autoplay muted loop playsinline crossorigin="anonymous">
-            <source src="https://raw.githubusercontent.com/CREATORSSTUDIOBRUSSELS/CreatorsSite/main/IMG_1807.MOV" type="video/quicktime">
-            <!-- Consider converting to MP4 for wider compatibility and adding a fallback source -->
+            <source src="https://cdn.streamable.com/video/mp4/xmuild.mp4" type="video/mp4">
+            <!-- Fallback text -->
             Your browser does not support background video.
         </video>
 
@@ -1287,6 +1289,9 @@
                     label.textContent = getLang() === 'fr' ? 'Muet' : 'Mute';
                 }
             }
+            // expose updateMuteBtn so other scripts (language switch) can call it
+            window.updateMuteBtn = updateMuteBtn;
+            window.updatePlayPauseBtn = updatePlayPauseBtn;
 
             if (bgVideo) {
                 bgVideo.addEventListener('loadedmetadata', function() {
@@ -1316,7 +1321,9 @@
             if (muteBtn) {
                 muteBtn.addEventListener('click', function() {
                     if (!bgVideo) return;
+                    // toggle mute and, if unmuting, ensure video plays (some browsers require user gesture)
                     bgVideo.muted = !bgVideo.muted;
+                    try { if (!bgVideo.muted && bgVideo.paused) bgVideo.play(); } catch(e) {}
                     updateMuteBtn();
                 });
             }
@@ -1501,4 +1508,4 @@
 
 
         document.querySelectorAll('section').forEach(function(s) { observer.observe(s); });</body>
-</html></html>
+</html>
