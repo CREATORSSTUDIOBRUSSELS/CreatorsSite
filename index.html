@@ -434,62 +434,32 @@
             min-width: 177.78vh;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            pointer-events: none;
+            /* allow user interaction (controls / clicks) */
+            pointer-events: auto;
             z-index: 0;
             background: transparent;
         }
 
-        /* Gradient overlay */
-        .video-overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(0,0,0,0.15) 0%,
-                rgba(0,0,0,0.1) 50%,
-                rgba(0,0,0,0.75) 100%
-            );
-            z-index: 1;
-        }
+        /* let overlay be visible but not block interactions with the video */
+        .video-overlay { pointer-events: none; }
 
-        /* Content centered (vertically + horizontally) and larger on all devices */
-        .header-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4; /* above overlay & player controls */
-            text-align: center;
-            color: var(--header-text);
-            padding: 0 1rem;
-            width: 100%;
-            max-width: 1100px;
-            pointer-events: none;
+        /* small volume slider styling */
+        .volume-slider {
+            width: 120px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
         }
-
-        .header-content h1 {
-            display: none; /* hidden on desktop, shown on mobile */
-            font-family: 'Proxima Nova', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-            pointer-events: auto;
-        }
-
-        /* 2x larger than before, but responsive: caps at 3.6rem */
-        .header-content p {
-            font-family: 'VT323', monospace;
-            font-size: clamp(2.2rem, 4.8vw, 3.6rem); /* keeps it large on all devices */
-            line-height: 1;
-            opacity: 0.95;
-            text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin: 0;
-            pointer-events: auto;
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         /* ===== VIDEO CONTROLS BAR ===== */
@@ -1077,10 +1047,10 @@
 
     <!-- ===== HEADER with YouTube Video Banner ===== -->
     <header id="home">
-        <!-- Streamable MP4 background video (autoplay muted to allow autoplay; user can unmute) -->
-        <video id="bgVideo" autoplay muted loop playsinline crossorigin="anonymous">
+        <!-- Streamable MP4 background video (autoplay muted to allow autoplay; user can unmute).
+             Controls attribute added so native controls show as fallback; we also provide custom controls. -->
+        <video id="bgVideo" autoplay muted loop playsinline preload="auto" controls controlsList="nodownload" crossorigin="anonymous">
             <source src="https://cdn.streamable.com/video/mp4/xmuild.mp4" type="video/mp4">
-            <!-- Fallback text -->
             Your browser does not support background video.
         </video>
 
@@ -1102,6 +1072,8 @@
                 <i class="fas fa-volume-mute" id="muteIcon"></i>
                 <span data-en="Sound" data-fr="Son">Sound</span>
             </button>
+            <!-- volume slider (0-100). visible next to mute button -->
+            <input id="volumeSlider" class="volume-slider" type="range" min="0" max="100" step="1" value="0" aria-label="Volume" title="Volume">
             <div class="video-progress-wrap" title="Video progress">
                 <div class="video-progress-bar" id="videoProgressBar"></div>
             </div>
@@ -1297,6 +1269,10 @@
                 bgVideo.addEventListener('loadedmetadata', function() {
                     updatePlayPauseBtn();
                     updateMuteBtn();
+                    // init volume slider value (0 if muted else current volume)
+                    if (volumeSlider) {
+                        volumeSlider.value = bgVideo.muted ? 0 : Math.round(bgVideo.volume * 100);
+                    }
                 });
 
                 bgVideo.addEventListener('timeupdate', function() {
@@ -1307,6 +1283,23 @@
 
                 bgVideo.addEventListener('play', updatePlayPauseBtn);
                 bgVideo.addEventListener('pause', updatePlayPauseBtn);
+            }
+
+            // volume slider handling
+            var volumeSlider = document.getElementById('volumeSlider');
+            if (volumeSlider) {
+                // initialize slider (in case video metadata already loaded)
+                try { volumeSlider.value = bgVideo && bgVideo.muted ? 0 : Math.round((bgVideo ? bgVideo.volume : 1) * 100); } catch(e){}
+                volumeSlider.addEventListener('input', function() {
+                    if (!bgVideo) return;
+                    var v = Number(this.value) / 100;
+                    bgVideo.volume = v;
+                    // if user moves slider > 0, unmute; if slider == 0, mute
+                    bgVideo.muted = v === 0;
+                    updateMuteBtn();
+                    // some browsers need a user gesture to start playback with sound — try to play
+                    try { if (!bgVideo.paused && !bgVideo.muted) bgVideo.play(); } catch(e) {}
+                });
             }
 
             if (playBtn) {
@@ -1323,6 +1316,8 @@
                     if (!bgVideo) return;
                     // toggle mute and, if unmuting, ensure video plays (some browsers require user gesture)
                     bgVideo.muted = !bgVideo.muted;
+                    // update slider to reflect mute state
+                    if (volumeSlider) volumeSlider.value = bgVideo.muted ? 0 : Math.round(bgVideo.volume * 100);
                     try { if (!bgVideo.muted && bgVideo.paused) bgVideo.play(); } catch(e) {}
                     updateMuteBtn();
                 });
