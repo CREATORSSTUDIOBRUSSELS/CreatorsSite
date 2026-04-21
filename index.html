@@ -423,8 +423,8 @@
             overflow: hidden;
         }
 
-        /* YouTube iframe fullscreen background */
-        #ytPlayer {
+        /* HTML5 background video fullscreen */
+        #bgVideo {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -433,8 +433,10 @@
             min-height: 100vh;
             min-width: 177.78vh;
             transform: translate(-50%, -50%);
+            object-fit: cover;
             pointer-events: none;
             z-index: 0;
+            background: transparent;
         }
 
         /* Gradient overlay */
@@ -451,17 +453,19 @@
             z-index: 1;
         }
 
-        /* Content pinned bottom-left */
+        /* Content centered (vertically + horizontally) and larger on all devices */
         .header-content {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 3;
+            z-index: 4; /* above overlay & player controls */
             text-align: center;
             color: var(--header-text);
-            width: 100%;
             padding: 0 1rem;
+            width: 100%;
+            max-width: 1100px;
+            pointer-events: none;
         }
 
         .header-content h1 {
@@ -472,15 +476,20 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
+            pointer-events: auto;
         }
 
+        /* 2x larger than before, but responsive: caps at 3.6rem */
         .header-content p {
             font-family: 'VT323', monospace;
-            font-size: 1.6rem;
-            opacity: 0.85;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+            font-size: clamp(2.2rem, 4.8vw, 3.6rem); /* keeps it large on all devices */
+            line-height: 1;
+            opacity: 0.95;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
             letter-spacing: 3px;
             text-transform: uppercase;
+            margin: 0;
+            pointer-events: auto;
         }
 
         /* ===== VIDEO CONTROLS BAR ===== */
@@ -890,7 +899,8 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .footer-container { grid-template-columns: 1fr 1fr; }
-            .header-content p { font-size: 1.5rem; }
+            /* keep the large centered headline on tablet, allow clamp to scale */
+            .header-content p { font-size: clamp(2.0rem, 6.5vw, 3.6rem); }
 
             nav.footer-menu { flex-direction: column; }
             nav.footer-menu .logo { margin-right: 0; margin-bottom: 1rem; }
@@ -971,7 +981,9 @@
         @media (max-width: 600px) {
             .footer-container { grid-template-columns: 1fr; }
             .newsletter { flex-direction: column; }
-            .header-content p { font-size: 1.1rem; }
+            /* keep centered & readable on narrow phones */
+            .header-content p { font-size: clamp(1.8rem, 7.5vw, 3.2rem); }
+
             section { padding: 4rem 1rem; }
             h2 { font-size: 2rem; }
 
@@ -1014,6 +1026,7 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- YouTube IFrame API -->
+    <!-- Background video used instead of YouTube -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <!-- Desktop Navigation -->
@@ -1062,8 +1075,12 @@
 
     <!-- ===== HEADER with YouTube Video Banner ===== -->
     <header id="home">
-        <!-- YouTube IFrame API player container (no controls, no logo) -->
-        <div id="ytPlayer"></div>
+        <!-- HTML5 background video (autoplay, muted, loop) -->
+        <video id="bgVideo" autoplay muted loop playsinline crossorigin="anonymous">
+            <source src="https://raw.githubusercontent.com/CREATORSSTUDIOBRUSSELS/CreatorsSite/main/IMG_1807.MOV" type="video/quicktime">
+            <!-- Consider converting to MP4 for wider compatibility and adding a fallback source -->
+            Your browser does not support background video.
+        </video>
 
         <div class="video-overlay"></div>
 
@@ -1234,123 +1251,76 @@
 
     <script>
         /* ===================================================
-           YOUTUBE IFRAME API — autoplay, looped, no controls
+           HTML5 background video controls (replaces YouTube)
         =================================================== */
-        var ytPlayer;
-        var isPlayerReady = false;
-        var isMuted = true;
-        var isPlaying = true;
-        var videoDuration = 0;
-        var progressInterval = null;
+        (function() {
+            var bgVideo = document.getElementById('bgVideo');
+            var playBtn = document.getElementById('btnPlayPause');
+            var muteBtn = document.getElementById('btnMute');
+            var progressBar = document.getElementById('videoProgressBar');
 
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('ytPlayer', {
-                videoId: 'cF2pd9PV9jI',
-                playerVars: {
-                    autoplay: 1,
-                    loop: 1,
-                    playlist: 'cF2pd9PV9jI',
-                    mute: 1,
-                    controls: 0,
-                    showinfo: 0,
-                    rel: 0,
-                    modestbranding: 1,
-                    disablekb: 1,
-                    fs: 0,
-                    iv_load_policy: 3,
-                    playsinline: 1
-                },
-                events: {
-                    onReady: onPlayerReady,
-                    onStateChange: onPlayerStateChange
+            function getLang() { return (typeof currentLang !== 'undefined') ? currentLang : 'en'; }
+
+            function updatePlayPauseBtn() {
+                var icon = document.getElementById('playPauseIcon');
+                var label = document.querySelector('#btnPlayPause span');
+                var playing = bgVideo && !bgVideo.paused && !bgVideo.ended;
+                if (playing) {
+                    icon.className = 'fas fa-pause';
+                    label.setAttribute('data-en', 'Pause'); label.setAttribute('data-fr', 'Pause');
+                    label.textContent = getLang() === 'fr' ? 'Pause' : 'Pause';
+                } else {
+                    icon.className = 'fas fa-play';
+                    label.setAttribute('data-en', 'Play'); label.setAttribute('data-fr', 'Jouer');
+                    label.textContent = getLang() === 'fr' ? 'Jouer' : 'Play';
                 }
-            });
-        }
-
-        function onPlayerReady(event) {
-            isPlayerReady = true;
-            event.target.playVideo();
-            videoDuration = ytPlayer.getDuration();
-            startProgressTracking();
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-                isPlaying = true;
-                updatePlayPauseBtn();
-                startProgressTracking();
-            } else if (event.data === YT.PlayerState.PAUSED) {
-                isPlaying = false;
-                updatePlayPauseBtn();
-                stopProgressTracking();
-            } else if (event.data === YT.PlayerState.ENDED) {
-                // loop restarts automatically via playlist param
             }
-        }
 
-        function updatePlayPauseBtn() {
-            var icon = document.getElementById('playPauseIcon');
-            var label = document.querySelector('#btnPlayPause span');
-            if (isPlaying) {
-                icon.className = 'fas fa-pause';
-                label.setAttribute('data-en', 'Pause');
-                label.setAttribute('data-fr', 'Pause');
-                label.textContent = currentLang === 'fr' ? 'Pause' : 'Pause';
-            } else {
-                icon.className = 'fas fa-play';
-                label.setAttribute('data-en', 'Play');
-                label.setAttribute('data-fr', 'Jouer');
-                label.textContent = currentLang === 'fr' ? 'Jouer' : 'Play';
+            function updateMuteBtn() {
+                var icon = document.getElementById('muteIcon');
+                var label = document.querySelector('#btnMute span');
+                if (!bgVideo || bgVideo.muted) {
+                    icon.className = 'fas fa-volume-mute';
+                    label.textContent = getLang() === 'fr' ? 'Son' : 'Sound';
+                } else {
+                    icon.className = 'fas fa-volume-up';
+                    label.textContent = getLang() === 'fr' ? 'Muet' : 'Mute';
+                }
             }
-        }
 
-        function updateMuteBtn() {
-            var icon = document.getElementById('muteIcon');
-            var label = document.querySelector('#btnMute span');
-            if (isMuted) {
-                icon.className = 'fas fa-volume-mute';
-                label.textContent = currentLang === 'fr' ? 'Son' : 'Sound';
-            } else {
-                icon.className = 'fas fa-volume-up';
-                label.textContent = currentLang === 'fr' ? 'Muet' : 'Mute';
+            if (bgVideo) {
+                bgVideo.addEventListener('loadedmetadata', function() {
+                    updatePlayPauseBtn();
+                    updateMuteBtn();
+                });
+
+                bgVideo.addEventListener('timeupdate', function() {
+                    var d = bgVideo.duration || 1;
+                    var pct = (bgVideo.currentTime / d) * 100;
+                    if (progressBar) progressBar.style.width = pct + '%';
+                });
+
+                bgVideo.addEventListener('play', updatePlayPauseBtn);
+                bgVideo.addEventListener('pause', updatePlayPauseBtn);
             }
-        }
 
-        function startProgressTracking() {
-            stopProgressTracking();
-            progressInterval = setInterval(function() {
-                if (!isPlayerReady || !ytPlayer) return;
-                var current = ytPlayer.getCurrentTime();
-                var duration = ytPlayer.getDuration() || videoDuration || 1;
-                var pct = (current / duration) * 100;
-                document.getElementById('videoProgressBar').style.width = pct + '%';
-            }, 800);
-        }
-
-        function stopProgressTracking() {
-            if (progressInterval) { clearInterval(progressInterval); progressInterval = null; }
-        }
-
-        document.getElementById('btnPlayPause').addEventListener('click', function() {
-            if (!isPlayerReady) return;
-            if (isPlaying) {
-                ytPlayer.pauseVideo();
-            } else {
-                ytPlayer.playVideo();
+            if (playBtn) {
+                playBtn.addEventListener('click', function() {
+                    if (!bgVideo) return;
+                    if (bgVideo.paused) bgVideo.play();
+                    else bgVideo.pause();
+                    updatePlayPauseBtn();
+                });
             }
-        });
 
-        document.getElementById('btnMute').addEventListener('click', function() {
-            if (!isPlayerReady) return;
-            if (isMuted) {
-                ytPlayer.unMute();
-                isMuted = false;
-            } else {
-                ytPlayer.mute();
-                isMuted = true;
+            if (muteBtn) {
+                muteBtn.addEventListener('click', function() {
+                    if (!bgVideo) return;
+                    bgVideo.muted = !bgVideo.muted;
+                    updateMuteBtn();
+                });
             }
-            updateMuteBtn();
-        });
+        })();
 
         /* ===================================================
            SCROLL NAV
@@ -1529,7 +1499,6 @@
             entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('fade-in'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('section').forEach(function(s) { observer.observe(s); });
-    </script>
-</body>
-</html>
+
+        document.querySelectorAll('section').forEach(function(s) { observer.observe(s); });</body>
+</html></html>
