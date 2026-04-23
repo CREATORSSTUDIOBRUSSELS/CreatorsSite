@@ -11,7 +11,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-NRJCB36J');</script>
     <!-- End Google Tag Manager -->
-
+ 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WK3H1HKH73"></script>
     <script>
@@ -20,7 +20,7 @@
       gtag('js', new Date());
       gtag('config', 'G-WK3H1HKH73');
     </script>
-
+ 
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
@@ -37,7 +37,7 @@
             --header-text: #fff;
             --control-size: 48px;
         }
-
+ 
         [data-theme="dark"] {
             --bg-color: #111;
             --text-color: #fff;
@@ -49,7 +49,7 @@
             --accent-color: #f0c000;
             --header-text: #fff;
         }
-
+ 
         * {margin:0; padding:0; box-sizing:border-box;}
         body {
             font-family: 'VT323', monospace; 
@@ -401,26 +401,25 @@
             transform-origin: left;
         }
         
-        /* Language Switch */
+        /* Language Switch — desktop: fixed top-right */
         .language-switch {
             position: fixed;
             top: 2rem;
             right: 6rem;
-            z-index: 1001;
+            z-index: 1003;
             background: rgba(255, 255, 255, 0.9);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             display: flex;
             gap: 0.5rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: top 0.3s ease, left 0.3s ease, right 0.3s ease;
         }
-
+ 
         .language-switch:hover {
-            transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-
+ 
         .language-switch button {
             background: none;
             border: none;
@@ -431,17 +430,28 @@
             border-radius: 4px;
             transition: all 0.3s;
         }
-
+ 
         .language-switch button.active {
             background: var(--text-color);
             color: var(--bg-color);
         }
-
+ 
         .language-switch button:hover:not(.active) {
             background: #f0f0f0;
             transform: scale(1.05);
         }
-
+ 
+        /* Mobile: language switch locked top-left, above everything including the open menu */
+        @media (max-width: 768px) {
+            .language-switch {
+                top: 1rem !important;
+                left: 1rem !important;
+                right: auto !important;
+                z-index: 1005 !important;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+ 
         /* Dark mode toggle styling: circular button that matches scroll-to-top styling,
            sits bottom-left, black in dark mode with white sun icon, white in light mode
            with dark moon icon. */
@@ -463,24 +473,24 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.45); /* match theme */
             transition: background .18s ease, color .18s ease, transform .12s ease;
         }
-
+ 
         .dark-mode-toggle i {
             color: #ffffff; /* inner of the sun white in dark mode */
             font-size: 18px;
             line-height: 1;
         }
-
+ 
         .dark-mode-toggle:hover { transform: translateY(-2px); }
-
+ 
         /* Light-mode appearance for the same circular button */
         .dark-mode-toggle.light {
             background: #ffffff;
             color: #111;
             box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         }
-
+ 
         .dark-mode-toggle.light i { color: #111111; }
-
+ 
         /* Ensure scroll-to-top uses same size variable so both controls match */
         .scroll-to-top {
             width: var(--control-size);
@@ -490,7 +500,7 @@
             align-items: center;
             justify-content: center;
         }
-
+ 
         /* Force position consistency on small screens too (override any mobile rules) */
         @media (max-width: 1024px) {
             .dark-mode-toggle {
@@ -500,7 +510,7 @@
                 top: auto !important;
             }
         }
-
+ 
         /* ===== HEADER ===== */
         header {
             position: relative;
@@ -510,7 +520,7 @@
             align-items: center;
             overflow: hidden;
         }
-
+ 
         /* video container and HTML5 video (so we can pause properly) */
         header .video-container {
             position: absolute;
@@ -521,7 +531,7 @@
             overflow: hidden;
             z-index: 0;
         }
-
+ 
         header .video-container video {
             position: absolute;
             top: 50%;
@@ -536,7 +546,7 @@
             z-index: 0;
             background: #000;
         }
-
+ 
         /* play/pause button positioned inside the video container (doesn't float while scrolling) */
         .video-container .video-toggle-btn {
             position: absolute;
@@ -557,12 +567,12 @@
             transition: transform 0.15s ease, background 0.15s ease;
             backdrop-filter: blur(6px);
         }
-
+ 
         .video-container .video-toggle-btn:hover {
             transform: translateY(-3px);
             background: rgba(0,0,0,0.8);
         }
-
+ 
         .header-content {
             position: relative;
             z-index: 2;
@@ -590,7 +600,7 @@
             opacity: 0.9;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.35);
         }
-
+ 
         /* ===== SECTIONS ===== */
         section {
             padding: 6rem 2rem;
@@ -615,7 +625,7 @@
             text-align: center;
             color: var(--text-color);
         }
-
+ 
         /* ABOUT */
         .about p {
             font-size: 1.2rem;
@@ -625,7 +635,7 @@
             line-height: 1.8;
             color: var(--text-color);
         }
-
+ 
         /* EQUIPMENT SECTION */
         .equipment-intro {
             text-align: center;
@@ -683,7 +693,7 @@
             position: relative;
             overflow: hidden;
         }
-
+ 
         [data-theme="dark"] .equipment-card {
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -727,7 +737,7 @@
         .equipment-icon img {
             transition: filter 0.25s ease, transform 0.25s ease;
         }
-
+ 
         /* Force white appearance on dark theme */
         [data-theme="dark"] .equipment-icon img {
             filter: brightness(0) invert(1);
@@ -807,7 +817,7 @@
             background: var(--accent-color);
             transform: scale(1.05);
         }
-
+ 
         /* Center toggle button on mobile */
         @media (max-width: 768px) {
             .toggle-details {
@@ -815,7 +825,7 @@
                 margin: 1rem auto 0 auto;
             }
         }
-
+ 
         /* CONTACT */
         .contact {
             display: flex;
@@ -868,7 +878,7 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
+ 
         /* ===== FOOTER ===== */
         footer {
             color: var(--footer-text);
@@ -978,7 +988,7 @@
             color: var(--accent-color);
             transform: translateY(-3px);
         }
-
+ 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .footer-container {
@@ -1019,7 +1029,7 @@
                 top: 1.5rem;
                 right: 40rem; /* your value */
             }
-
+ 
             /* When mobile menu opens, move language switch to left corner (overrides right) */
             .cosmic-menu.active + .language-switch {
                 left: 1rem !important;
@@ -1028,7 +1038,7 @@
                 z-index: 1003;
                 transition: left .18s ease, right .18s ease, top .18s ease;
             }
-
+ 
             /* Adjust dark mode toggle position */
             .dark-mode-toggle {
                 top: 1.5rem;
@@ -1101,12 +1111,6 @@
                 font-size: 2rem;
             }
             
-            .language-switch {
-                top: 1rem;
-                right: 40rem;
-                padding: 0.4rem 0.8rem;
-            }
-
             .dark-mode-toggle {
                 top: 1rem;
                 left: auto;
@@ -1126,53 +1130,8 @@
                 font-size: 1.5rem;
             }
         }
-
-        @media (max-width: 425px) {
-    /* keep theme/appearance but force visible position on smaller phones */
-    .language-switch {
-        top: 1rem !important;
-        right: 19rem !important;   /* updated per your value */
-        padding: 0.35rem 0.7rem !important;
-        z-index: 1004 !important;
-    }
-
-    /* When mobile menu opens keep it in the left corner */
-    .cosmic-menu.active + .language-switch {
-        left: 1rem !important;
-        right: auto !important;
-        top: 1rem !important;
-        z-index: 1005 !important;
-    }
-}
-
-/* explicit rule for 375px width phones */
-@media (max-width: 375px) {
-    .language-switch {
-        top: 1rem !important;
-        right: 16.5rem !important; /* updated per your value */
-        padding: 0.35rem 0.7rem !important;
-        z-index: 1004 !important;
-    }
-
-    .cosmic-menu.active + .language-switch {
-        left: 1rem !important;
-        right: auto !important;
-        top: 1rem !important;
-        z-index: 1005 !important;
-    }
-}
-
-@media (max-width: 320px) {
-    .language-switch {
-        right: 13rem !important; /* updated per your value */
-        padding: 0.28rem 0.6rem !important;
-        font-size: 0.95rem;
-    }
-    .cosmic-menu.active + .language-switch {
-        left: 0.6rem !important;
-        top: 0.9rem !important;
-    }
-}
+ 
+        /* No per-device hacks needed: language-switch lives inside the cosmic menu on mobile */
     </style>
 </head>
 <body data-theme="dark">
@@ -1180,7 +1139,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRJCB36J"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-
+ 
     <!-- Original Desktop Menu -->
     <nav id="navbar">
         <div class="logo" id="menu-logo">CREATORS STUDIO</div>
@@ -1191,12 +1150,12 @@
             <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
         </ul>
     </nav>
-
+ 
     <!-- Scroll to top button -->
     <div class="scroll-to-top" id="scrollToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
-
+ 
     <!-- (moved) video toggle will live inside the video container below -->
  
      <!-- Mobile Menu Button -->
@@ -1210,11 +1169,15 @@
      <div class="cosmic-menu" id="cosmicMenu">
          <!-- Stars will be added here by JavaScript -->
          <ul>
+             <li><a href="#home" data-en="Home" data-fr="Accueil">Home</a></li>
+             <li><a href="#about" data-en="About" data-fr="À Propos">About</a></li>
+             <li><a href="#services" data-en="Services & Equipment" data-fr="Services & Équipement">Services & Equipment</a></li>
+             <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
          </ul>
      </div>
  
      <!-- Language Switch -->
-     <div class="language-switch">
+     <div class="language-switch" id="languageSwitch">
          <button id="lang-en" class="active">EN</button>
          <button id="lang-fr">FR</button>
      </div>
@@ -1252,7 +1215,7 @@
     <section id="services" class="gallery">
         <h2 data-en="Services & Equipment" data-fr="Services & Équipement">Services & Equipment</h2>
         <p class="equipment-intro" data-en="Discover our professional equipment and services for your creative projects:" data-fr="Découvrez notre équipement professionnel et nos services pour vos projets créatifs :">Discover our professional equipment and services for your creative projects:</p>
-
+ 
         <div class="equipment-grid">
             <!-- STUDIO PHOTO -->
             <div class="equipment-card">
@@ -1265,7 +1228,7 @@
                 </div>
                 <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
             </div>
-
+ 
             <!-- POST-PRODUCTION -->
             <div class="equipment-card">
                 <div class="equipment-icon">
@@ -1283,7 +1246,7 @@
                 </div>
                 <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
             </div>
-
+ 
             <!-- ART DIRECTION -->
             <div class="equipment-card">
                 <div class="equipment-icon">
@@ -1295,7 +1258,7 @@
                 </div>
                 <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
             </div>
-
+ 
             <!-- COWORKING SPACE -->
             <div class="equipment-card">
                 <div class="equipment-icon">
@@ -1307,7 +1270,7 @@
                 </div>
                 <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
             </div>
-
+ 
             <!-- MAKE UP AREA -->
             <div class="equipment-card">
                 <div class="equipment-icon">
@@ -1319,7 +1282,7 @@
                 </div>
                 <button class="toggle-details" data-en="More Info" data-fr="Plus d'Infos">More Info</button>
             </div>
-
+ 
             <!-- ESPACE POLYVALENT -->
             <div class="equipment-card">
                 <div class="equipment-icon">
@@ -1333,7 +1296,7 @@
             </div>
         </div>
     </section>
-
+ 
     <!-- CONTACT -->
     <section id="contact" class="contact">
         <h2 data-en="Contact Us" data-fr="Contactez-Nous">Contact Us</h2>
@@ -1347,31 +1310,31 @@
     Your Name:
     <input type="text" name="name" required>
   </label>
-
+ 
   <label>
     Your Email:
     <input type="email" name="email" required>
   </label>
-
+ 
   <label>
     Subject:
     <input type="text" name="subject" required>
   </label>
-
+ 
   <label>
     Your Message:
     <textarea name="message" required></textarea>
   </label>
-
+ 
   <button type="submit">Send</button>
 </form>
-
+ 
 <script>
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-
+ 
   const formData = new FormData(this);
-
+ 
   // Optional: check required fields before sending
   const requiredFields = this.querySelectorAll('[required]');
   for (let field of requiredFields) {
@@ -1381,14 +1344,14 @@ document.getElementById('contact-form').addEventListener('submit', async functio
       return;
     }
   }
-
+ 
   try {
     const response = await fetch(this.action, {
       method: 'POST',
       body: formData,
       headers: { 'Accept': 'application/json' }
     });
-
+ 
     if (response.ok) {
       alert('✅ Message sent successfully!');
       this.reset();
@@ -1401,13 +1364,13 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   }
 });
 </script>
-
+ 
     </section>
-
+ 
     <!-- FOOTER -->
     <footer>
-
-
+ 
+ 
         <div class="footer-container">
             <div class="footer-col">
                 <h3 data-en="About Us" data-fr="À Propos">About Us</h3>
@@ -1438,7 +1401,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     </form>
 </div>
         </div>
-
+ 
         <div class="footer-bottom">
             <div class="social-links">
                 <a href="https://instagram.com/creators.be" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -1448,7 +1411,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
             <p>&copy; 2025 CREATORS STUDIO. All rights reserved.</p>
         </div>
     </footer>
-
+ 
     <script>
         // Scroll event for navbar and logo
         window.addEventListener('scroll', function() {
@@ -1470,7 +1433,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 scrollToTop.classList.remove('visible');
             }
         });
-
+ 
         // Scroll to top functionality
         document.getElementById('scrollToTop').addEventListener('click', function() {
             window.scrollTo({
@@ -1478,12 +1441,12 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 behavior: 'smooth'
             });
         });
-
+ 
         // Mobile menu functionality
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const cosmicMenu = document.getElementById('cosmicMenu');
         const cosmicMenuLinks = cosmicMenu.querySelectorAll('a');
-
+ 
         mobileMenuBtn.addEventListener('click', function() {
             mobileMenuBtn.classList.toggle('active');
             cosmicMenu.classList.toggle('active');
@@ -1492,7 +1455,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 createStars();
             }
         });
-
+ 
         // Close mobile menu when clicking on a link
         cosmicMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -1500,7 +1463,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 cosmicMenu.classList.remove('active');
             });
         });
-
+ 
         // Create stars for cosmic menu
         function createStars() {
             const cosmicMenu = document.getElementById('cosmicMenu');
@@ -1529,7 +1492,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 cosmicMenu.appendChild(star);
             }
         }
-
+ 
         // Equipment card toggle functionality
         document.querySelectorAll('.toggle-details').forEach(button => {
             button.addEventListener('click', function() {
@@ -1554,12 +1517,12 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 }
             });
         });
-
+ 
         // Language switching functionality
         let currentLang = 'en';
         const langEnBtn = document.getElementById('lang-en');
         const langFrBtn = document.getElementById('lang-fr');
-
+ 
         langEnBtn.addEventListener('click', function() {
             if (currentLang !== 'en') {
                 switchLanguage('en');
@@ -1567,7 +1530,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 langFrBtn.classList.remove('active');
             }
         });
-
+ 
         langFrBtn.addEventListener('click', function() {
             if (currentLang !== 'fr') {
                 switchLanguage('fr');
@@ -1575,7 +1538,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 langEnBtn.classList.remove('active');
             }
         });
-
+ 
         function switchLanguage(lang) {
             currentLang = lang;
             
@@ -1606,12 +1569,12 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 }
             });
         }
-
+ 
         // Dark mode toggle functionality (default = dark)
         (function() {
             const darkModeToggle = document.getElementById('darkModeToggle');
             const darkModeIcon = darkModeToggle.querySelector('i');
-
+ 
             function setTheme(theme) {
                 if (theme === 'dark') {
                     document.body.setAttribute('data-theme', 'dark');
@@ -1627,17 +1590,17 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                     localStorage.setItem('theme', 'light');
                 }
             }
-
+ 
             darkModeToggle.addEventListener('click', function() {
                 const current = document.body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
                 setTheme(current === 'dark' ? 'light' : 'dark');
             });
-
+ 
             // Restore saved preference; default to dark if none
             const saved = localStorage.getItem('theme');
             if (saved === 'light') setTheme('light'); else setTheme('dark');
         })();
-
+ 
         /* ============================
            Background HTML5 video pause/play
            - Uses a direct mp4 source (streamable CDN pattern). If that URL fails,
@@ -1648,10 +1611,10 @@ document.getElementById('contact-form').addEventListener('submit', async functio
             const bgVideo = document.getElementById('bgVideo');
             const videoToggleBtn = document.getElementById('videoToggleBtn');
             const icon = videoToggleBtn.querySelector('i');
-
+ 
             // Safe guard: if video element not found, do nothing
             if (!bgVideo || !videoToggleBtn) return;
-
+ 
             videoToggleBtn.addEventListener('click', function() {
                 if (bgVideo.paused) {
                     bgVideo.play().catch(() => { /* autoplay may fail on some browsers */ });
@@ -1666,14 +1629,14 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 }
             });
         })();
-
+ 
         // Newsletter form submission
         document.querySelector('.newsletter').addEventListener('submit', function(e) {
             e.preventDefault();
             alert(currentLang === 'en' ? 'Thank you for subscribing!' : 'Merci de vous être abonné !');
             this.reset();
         });
-
+ 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1693,13 +1656,13 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 }
             });
         });
-
+ 
         // Fade in sections on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-
+ 
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1707,10 +1670,13 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 }
             });
         }, observerOptions);
-
+ 
         document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
     </script>
 </body>
 </html>
+
+
+
